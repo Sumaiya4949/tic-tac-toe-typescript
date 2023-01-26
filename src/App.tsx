@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
+import { TicTacToeGrid } from './TicTacToeGrid'
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <TicTacToeGrid />
     </div>
+
   );
 }
 
