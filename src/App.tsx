@@ -15,8 +15,8 @@ function App() {
 
   return ( 
     <div>
-      <ScoreBoard currentPlayer='0' gameStatus='Running' winner='X'></ScoreBoard>
-      <TicTacToeGrid grid9Values={values} cellClickHandler={onCellClick} winnerIndex={WinnerCellIndices}/>
+      <ScoreBoard currentPlayer='0' gameStatus='Win' winner='X'></ScoreBoard>
+      <TicTacToeGrid grid9Values={values} handleCellClick={onCellClick} winnerIndex={WinnerCellIndices}/>
       <button className='resetButton'>Reset</button>
     </div>
 
