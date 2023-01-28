@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import './App.css';
-import { TicTacToeGrid } from './TicTacToeGrid'
-import type { Grid9Values , CellClickHandler, CellIndex, WinnerCellIndices} from "./TicTacToeGridType"
-
-const values : Grid9Values = [null, null, null, null, null, null, null, null, null];
-const winnerCellIndices : WinnerCellIndices = null;
-
-const onCellClick : CellClickHandler = (cellIndex: CellIndex) => {}
-
-const [score, setScore] = useState(values);
-const [winnerIndex, setWinnerIndex] = useState(winnerCellIndices);
-
+import { TicTacToeGrid } from './TicTacToeGrid';
+import type { CellClickHandler, Grid9Values, WinnerCellIndices } from "./TicTacToeGridType"
 
 function App() {
+  const values : Grid9Values = [null, null, null, null, '0', null, null, null, 'X'];
+  const WinnerCellIndices: WinnerCellIndices = null;
+
+  const onCellClick: CellClickHandler = (cellIndex) => {
+    console.log(`Hi ${cellIndex} is clicked`);
+  }
+  
+
   return (
     <div>
-      <TicTacToeGrid cellClickHandler={onCellClick} score={score} winnerIndex={winnerIndex} />
+      <TicTacToeGrid grid9Values={values} cellClickHandler={onCellClick} winnerIndex={WinnerCellIndices}/>
     </div>
 
   );
