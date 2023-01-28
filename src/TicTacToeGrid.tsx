@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import './TicTacToeGrid.css';
-import type { CellClickHandler, Grid9Values, WinnerCellIndices, CellIndex } from "./TicTacToeGridType"
+import type { CellClickHandler, Grid9Values, WinnerCellIndices, CellIndex } from "./type"
 
 type TicTacToeGridPropType = {
   cellClickHandler: CellClickHandler;

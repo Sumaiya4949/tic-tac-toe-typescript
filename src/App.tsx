@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import { TicTacToeGrid } from './TicTacToeGrid';
-import type { CellClickHandler, Grid9Values, WinnerCellIndices } from "./TicTacToeGridType"
+import type { CellClickHandler, CellIndex, Grid9Values, WinnerCellIndices } from "./type"
 
 function App() {
   const values : Grid9Values = [null, null, null, null, '0', null, null, null, 'X'];
   const WinnerCellIndices: WinnerCellIndices = null;
 
-  const onCellClick: CellClickHandler = (cellIndex) => {
+  const onCellClick: CellClickHandler = (cellIndex: CellIndex) => {
     console.log(`Hi ${cellIndex} is clicked`);
   }
   
