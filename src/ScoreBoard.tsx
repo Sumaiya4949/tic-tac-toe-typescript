@@ -10,21 +10,11 @@ type ScoreBoardPropType = {
 export const ScoreBoard = (props : ScoreBoardPropType) => {
   const { currentPlayer, gameStatus, winner } = props;
 
-  const renderElement = () => {
-      if (gameStatus === "Running") {
-        return <div>Now playing : {currentPlayer}</div>;
-      }
-      else if (gameStatus === "Win") {
-        return <div>Game Over: Winner {winner}</div>
-      }
-      else if (gameStatus === "Draw") {
-        return <div>Game Status : {gameStatus}</div>
-      }
-  }
-
   return (
     <div className="currentStatusContainer">
-      {renderElement()}
+      {gameStatus === "Running" && <div>Now playing : {currentPlayer}</div>}
+      {gameStatus === "Win" && <div>Game Over: Winner {winner}</div>}
+      {gameStatus === "Draw" && <div>Game Status : {gameStatus}</div>}
     </div>
   )
 }
