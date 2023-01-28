@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { ScoreBoard } from './ScoreBoard';
 import { TicTacToeGrid } from './TicTacToeGrid';
 import type { CellClickHandler, CellIndex, Grid9Values, WinnerCellIndices } from "./type"
 
@@ -12,9 +13,11 @@ function App() {
   }
   
 
-  return (
+  return ( 
     <div>
+      <ScoreBoard currentPlayer='0' gameStatus='Running' winner='X'></ScoreBoard>
       <TicTacToeGrid grid9Values={values} cellClickHandler={onCellClick} winnerIndex={WinnerCellIndices}/>
+      <button className='resetButton'>Reset</button>
     </div>
 
   );

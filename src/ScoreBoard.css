@@ -1,0 +1,7 @@
+.currentStatusContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 250px);
+    justify-content: center;
+    font-size: large;
+    padding: 10px;
+}

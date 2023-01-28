@@ -4,6 +4,7 @@
     grid-template-rows: repeat(3, 150px);
     justify-content: center;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
   
   .grid-item {
