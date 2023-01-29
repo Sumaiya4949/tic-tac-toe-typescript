@@ -81,9 +81,9 @@ function App() {
     }
   }, [scoreValues]);
 
-  const onCellClick: CellClickHandler = useCallback(
+  const handleCellClick: CellClickHandler = useCallback(
     (cellIndex: CellIndex) => {
-      if (winnerDetail.winner === null) {
+      if (gameStatus === "Running") {
         setScoreValues((prevScores: Grid9Values) => {
           return prevScores.map((item, index) => {
             if (index === cellIndex) return currentPlayer === "X" ? "X" : "0";
@@ -97,32 +97,19 @@ function App() {
     [currentPlayer, winnerDetail]
   );
 
-  const isGameDraw = useMemo(() => {
-
-      if (!scoreValues.includes(null) && !winnerDetail.winner) {
-        return true;
-      } else {
-        return false;
-    }
-  }, [scoreValues, winnerDetail]);
-
   const gameStatus = useMemo(() => {
     if (winnerDetail.winner !== null) {
       return "Win";
-    } else if (isGameDraw) {
+    } else if (!scoreValues.includes(null)) {
       return "Draw";
     } else {
       return "Running";
     }
-  }, [winnerDetail, isGameDraw]);
+  }, [winnerDetail]);
 
   const handleReset = useCallback(() => {
-    setScoreValues(
-      (prevScore: Grid9Values) => prevScore.map((item) => null) as Grid9Values
-    );
+    setScoreValues([null, null, null, null, null, null, null, null, null]);
     setCurrentPlayer("X");
-    winnerDetail.winner = null;
-    winnerDetail.winnerIndices = null;
   }, [winnerDetail]);
 
   return (
@@ -134,7 +121,7 @@ function App() {
       ></ScoreBoard>
       <TicTacToeGrid
         grid9Values={scoreValues}
-        handleCellClick={onCellClick}
+        handleCellClick={handleCellClick}
         winnerIndices={winnerDetail.winnerIndices}
       />
       <button className="resetButton" onClick={handleReset}>
