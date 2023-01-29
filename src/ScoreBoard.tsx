@@ -4,7 +4,7 @@ import './ScoreBoard.css';
 type ScoreBoardPropType = {
   currentPlayer?: PlayableValue,
   gameStatus: GameStatus,
-  winner?: PlayableValue;
+  winner?: PlayableValue| null ;
 }
 
 export const ScoreBoard = (props : ScoreBoardPropType) => {
