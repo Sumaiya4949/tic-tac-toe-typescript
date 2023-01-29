@@ -7,7 +7,7 @@ import type {
   CellIndex,
   Grid9Values,
   PlayableValue,
-  WinnerDetail
+  WinnerDetail,
 } from "./type";
 
 const values: Grid9Values = [
@@ -97,16 +97,30 @@ function App() {
     [currentPlayer, winnerDetail]
   );
 
+  const isGameDraw = useMemo(() => {
+    for (let i = 0; i < 9; i++) {
+      if (!scoreValues.includes(null) && !winnerDetail.winner) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, [scoreValues, winnerDetail]);
+
   const gameStatus = useMemo(() => {
     if (winnerDetail.winner !== null) {
       return "Win";
+    } else if (isGameDraw) {
+      return "Draw";
     } else {
       return "Running";
     }
-  }, [winnerDetail]);
+  }, [winnerDetail, isGameDraw]);
 
   const handleReset = useCallback(() => {
-    setScoreValues((prevScore: Grid9Values) => prevScore.map((item) => null) as Grid9Values);
+    setScoreValues(
+      (prevScore: Grid9Values) => prevScore.map((item) => null) as Grid9Values
+    );
     setCurrentPlayer("X");
     winnerDetail.winner = null;
     winnerDetail.winnerIndices = null;
