@@ -81,6 +81,16 @@ function App() {
     }
   }, [scoreValues]);
 
+  const gameStatus = useMemo(() => {
+    if (winnerDetail.winner !== null) {
+      return "Win";
+    } else if (!scoreValues.includes(null)) {
+      return "Draw";
+    } else {
+      return "Running";
+    }
+  }, [winnerDetail, scoreValues]);
+
   const handleCellClick: CellClickHandler = useCallback(
     (cellIndex: CellIndex) => {
       if (gameStatus === "Running") {
@@ -94,23 +104,13 @@ function App() {
         setCurrentPlayer((prevPlayer) => (prevPlayer === "X" ? "0" : "X"));
       }
     },
-    [currentPlayer, winnerDetail]
+    [currentPlayer, gameStatus]
   );
-
-  const gameStatus = useMemo(() => {
-    if (winnerDetail.winner !== null) {
-      return "Win";
-    } else if (!scoreValues.includes(null)) {
-      return "Draw";
-    } else {
-      return "Running";
-    }
-  }, [winnerDetail]);
 
   const handleReset = useCallback(() => {
     setScoreValues([null, null, null, null, null, null, null, null, null]);
     setCurrentPlayer("X");
-  }, [winnerDetail]);
+  }, []);
 
   return (
     <div>
