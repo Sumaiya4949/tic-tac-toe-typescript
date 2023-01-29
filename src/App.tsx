@@ -98,12 +98,11 @@ function App() {
   );
 
   const isGameDraw = useMemo(() => {
-    for (let i = 0; i < 9; i++) {
+
       if (!scoreValues.includes(null) && !winnerDetail.winner) {
         return true;
       } else {
         return false;
-      }
     }
   }, [scoreValues, winnerDetail]);
 
