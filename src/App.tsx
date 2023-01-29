@@ -6,9 +6,8 @@ import type {
   CellClickHandler,
   CellIndex,
   Grid9Values,
-  WinnerCellIndices,
   PlayableValue,
-  WinnerDetail,
+  WinnerDetail
 } from "./type";
 
 const values: Grid9Values = [
@@ -27,7 +26,7 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<PlayableValue>("X");
   const [scoreValues, setScoreValues] = useState<Grid9Values>(values);
 
-  const winnerDetail : WinnerDetail = useMemo(() => {
+  const winnerDetail: WinnerDetail = useMemo(() => {
     let i = 0;
     while (i < 7) {
       if (
@@ -35,7 +34,10 @@ function App() {
         scoreValues[i] === scoreValues[i + 2] &&
         scoreValues[i] !== null
       ) {
-        return {winner: scoreValues[i], winnerIndices: [i, i + 1, i + 2]} as WinnerDetail;
+        return {
+          winner: scoreValues[i],
+          winnerIndices: [i, i + 1, i + 2],
+        } as WinnerDetail;
       }
       i = i + 3;
     }
@@ -47,7 +49,10 @@ function App() {
         scoreValues[j] === scoreValues[j + 6] &&
         scoreValues[j] !== null
       ) {
-        return {winner: scoreValues[j], winnerIndices: [j, j + 3, j + 6]} as WinnerDetail;
+        return {
+          winner: scoreValues[j],
+          winnerIndices: [j, j + 3, j + 6],
+        } as WinnerDetail;
       }
       j = j + 1;
     }
@@ -58,15 +63,21 @@ function App() {
       scoreValues[k] === scoreValues[k + 8] &&
       scoreValues[k] !== null
     ) {
-      return {winner: scoreValues[k], winnerIndices: [k, k + 4, k + 8]} as WinnerDetail;
+      return {
+        winner: scoreValues[k],
+        winnerIndices: [k, k + 4, k + 8],
+      } as WinnerDetail;
     } else if (
       scoreValues[k + 2] === scoreValues[k + 4] &&
       scoreValues[k + 4] === scoreValues[k + 6] &&
       scoreValues[k + 2] !== null
     ) {
-      return {winner: scoreValues[k + 2], winnerIndices: [k + 2, k + 4, k + 6]} as WinnerDetail;
+      return {
+        winner: scoreValues[k + 2],
+        winnerIndices: [k + 2, k + 4, k + 6],
+      } as WinnerDetail;
     } else {
-      return {winner: null, winnerIndices: null} as WinnerDetail;
+      return { winner: null, winnerIndices: null } as WinnerDetail;
     }
   }, [scoreValues]);
 
@@ -86,11 +97,26 @@ function App() {
     [currentPlayer, winnerDetail]
   );
 
+  const gameStatus = useMemo(() => {
+    if (winnerDetail.winner !== null) {
+      return "Win";
+    } else {
+      return "Running";
+    }
+  }, [winnerDetail]);
+
+  const handleReset = useCallback(() => {
+    setScoreValues((prevScore: Grid9Values) => prevScore.map((item) => null) as Grid9Values);
+    setCurrentPlayer("X");
+    winnerDetail.winner = null;
+    winnerDetail.winnerIndices = null;
+  }, [winnerDetail]);
+
   return (
     <div>
       <ScoreBoard
         currentPlayer={currentPlayer}
-        gameStatus="Running"
+        gameStatus={gameStatus}
         winner={winnerDetail.winner}
       ></ScoreBoard>
       <TicTacToeGrid
@@ -98,7 +124,9 @@ function App() {
         handleCellClick={onCellClick}
         winnerIndices={winnerDetail.winnerIndices}
       />
-      <button className="resetButton">Reset</button>
+      <button className="resetButton" onClick={handleReset}>
+        Reset
+      </button>
     </div>
   );
 }
