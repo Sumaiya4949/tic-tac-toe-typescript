@@ -8,6 +8,7 @@ import type {
   Grid9Values,
   WinnerCellIndices,
   PlayableValue,
+  WinnerDetail,
 } from "./type";
 
 const values: Grid9Values = [
@@ -26,9 +27,7 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<PlayableValue>("X");
   const [scoreValues, setScoreValues] = useState<Grid9Values>(values);
 
-  const winnerCellIndices: WinnerCellIndices = null;
-
-  const winner = useMemo(() => {
+  const winnerDetail : WinnerDetail = useMemo(() => {
     let i = 0;
     while (i < 7) {
       if (
@@ -36,7 +35,7 @@ function App() {
         scoreValues[i] === scoreValues[i + 2] &&
         scoreValues[i] !== null
       ) {
-        return scoreValues[i];
+        return {winner: scoreValues[i], winnerIndices: [i, i + 1, i + 2]} as WinnerDetail;
       }
       i = i + 3;
     }
@@ -48,7 +47,7 @@ function App() {
         scoreValues[j] === scoreValues[j + 6] &&
         scoreValues[j] !== null
       ) {
-        return scoreValues[j];
+        return {winner: scoreValues[j], winnerIndices: [j, j + 3, j + 6]} as WinnerDetail;
       }
       j = j + 1;
     }
@@ -59,21 +58,21 @@ function App() {
       scoreValues[k] === scoreValues[k + 8] &&
       scoreValues[k] !== null
     ) {
-      return scoreValues[k];
+      return {winner: scoreValues[k], winnerIndices: [k, k + 4, k + 8]} as WinnerDetail;
     } else if (
       scoreValues[k + 2] === scoreValues[k + 4] &&
       scoreValues[k + 4] === scoreValues[k + 6] &&
       scoreValues[k + 2] !== null
     ) {
-      return scoreValues[k + 2];
+      return {winner: scoreValues[k + 2], winnerIndices: [k + 2, k + 4, k + 6]} as WinnerDetail;
     } else {
-      return null;
+      return {winner: null, winnerIndices: null} as WinnerDetail;
     }
   }, [scoreValues]);
 
   const onCellClick: CellClickHandler = useCallback(
     (cellIndex: CellIndex) => {
-      if (winner === null) {
+      if (winnerDetail.winner === null) {
         setScoreValues((prevScores: Grid9Values) => {
           return prevScores.map((item, index) => {
             if (index === cellIndex) return currentPlayer === "X" ? "X" : "0";
@@ -84,7 +83,7 @@ function App() {
         setCurrentPlayer((prevPlayer) => (prevPlayer === "X" ? "0" : "X"));
       }
     },
-    [currentPlayer, winner]
+    [currentPlayer, winnerDetail]
   );
 
   return (
@@ -92,12 +91,12 @@ function App() {
       <ScoreBoard
         currentPlayer={currentPlayer}
         gameStatus="Running"
-        winner={winner}
+        winner={winnerDetail.winner}
       ></ScoreBoard>
       <TicTacToeGrid
         grid9Values={scoreValues}
         handleCellClick={onCellClick}
-        winnerIndex={winnerCellIndices}
+        winnerIndices={winnerDetail.winnerIndices}
       />
       <button className="resetButton">Reset</button>
     </div>

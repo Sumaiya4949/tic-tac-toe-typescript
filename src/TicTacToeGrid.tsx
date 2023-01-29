@@ -5,20 +5,20 @@ import type { CellClickHandler, Grid9Values, WinnerCellIndices, CellIndex } from
 type TicTacToeGridPropType = {
   handleCellClick: CellClickHandler;
   grid9Values: Grid9Values;
-  winnerIndex: WinnerCellIndices;
+  winnerIndices: WinnerCellIndices;
 }
 
 export const TicTacToeGrid = (props : TicTacToeGridPropType) => {
-  const { handleCellClick, grid9Values, winnerIndex} = props;
+  const { handleCellClick, grid9Values, winnerIndices} = props;
 
   const cellStyle = useMemo(() => {
     let arr = [];
     
     for (let i = 0; i < 9; i++) {
-      winnerIndex?.includes(i as CellIndex) ? arr[i] =  {backgroundColor : 'pink'} :  arr[i] = { backgroundColor : 'white'}
+      winnerIndices?.includes(i as CellIndex) ? arr[i] =  {backgroundColor : 'pink'} :  arr[i] = { backgroundColor : 'white'}
     }
     return arr;
-  }, [winnerIndex]);
+  }, [winnerIndices]);
 
     return (
     <div className="grid-container">

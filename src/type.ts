@@ -5,3 +5,4 @@ export type Grid9Values = [CellValue, CellValue, CellValue, CellValue, CellValue
 export type  WinnerCellIndices = [CellIndex, CellIndex, CellIndex] | null;
 export type CellClickHandler = (cellIndex: CellIndex) => void;
 export type GameStatus = "Win" | "Draw" | "Running";
+export type WinnerDetail = { winner: PlayableValue | null, winnerIndices: WinnerCellIndices };
